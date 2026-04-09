@@ -1,49 +1,49 @@
 <template>
     <div class="comments-wrapper">
-        <div class="field is-grouped">
+        <div class="field is-grouped comments-toolbar">
             <slot name="controls"
                 :create="create"
                 :internal-query="internalQuery"
                 :fetch="fetch">
                 <p class="control">
-                    <a class="button is-rounded is-small is-bold is-info"
+                    <a class="button is-rounded is-small is-info has-text-weight-bold comments-toolbar__button comments-toolbar__button--add"
                         @click="create()">
                         <span v-if="!compact">
                             {{ i18n('Add') }}
                         </span>
                         <span class="icon">
-                            <fa icon="plus"/>
+                            <fa :icon="faPlus"/>
                         </span>
                     </a>
                 </p>
                 <p class="control has-icons-left has-icons-right is-expanded">
                     <input v-model="internalQuery"
-                        class="input is-rounded is-small is-expanded"
+                        class="input is-rounded is-small is-expanded comments-toolbar__search"
                         type="text"
                         :placeholder="i18n('Filter')">
-                    <span class="icon is-small is-left">
-                        <fa icon="search"/>
+                    <span class="icon is-small is-left comments-toolbar__search-icon has-text-muted">
+                        <fa :icon="faSearch"/>
                     </span>
                     <span v-if="internalQuery"
-                        class="icon is-small is-right clear-button"
+                        class="icon is-small is-right clear-button comments-toolbar__clear has-text-muted is-clickable"
                         @click="internalQuery = ''">
                         <a class="delete is-small"/>
                     </span>
                 </p>
                 <p class="control">
-                    <a class="button is-rounded is-small is-bold ml-2"
+                    <a class="button is-rounded is-small ml-2 has-text-weight-bold comments-toolbar__button comments-toolbar__button--reload"
                         @click="fetch()">
                         <span v-if="!compact">
                             {{ i18n('Reload') }}
                         </span>
                         <span class="icon">
-                            <fa icon="sync"/>
+                            <fa :icon="faArrowsRotate"/>
                         </span>
                     </a>
                 </p>
             </slot>
         </div>
-        <div class="comments p-1">
+        <div class="comments p-3">
             <comment v-if="comment"
                 :id="id"
                 is-new
@@ -65,12 +65,9 @@
 
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faSync, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { mapState } from 'vuex';
+import { faPlus, faArrowsRotate, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Comment from './Comment.vue';
-
-library.add(faPlus, faSync, faSearch);
+import { useStore } from '../utils/pinia';
 
 export default {
     name: 'Comments',
@@ -103,6 +100,9 @@ export default {
     data: v => ({
         comments: [],
         comment: null,
+        faPlus,
+        faSearch,
+        faArrowsRotate,
         loading: false,
         internalQuery: '',
         path: v.$route.path,
@@ -110,7 +110,9 @@ export default {
     }),
 
     computed: {
-        ...mapState(['user']),
+        user() {
+            return useStore('app').user;
+        },
         filteredComments() {
             const query = this.internalQuery.toLowerCase();
 
@@ -229,7 +231,70 @@ export default {
 </script>
 
 <style lang="scss">
-    .comments-wrapper .comments {
+.comments-toolbar {
+    .comments-toolbar__search,
+    .comments-toolbar__button--reload {
+        background-color: var(--enso-filter-control-surface);
+    }
+
+    .comments-toolbar__search {
+        color: var(--bulma-input-color);
+
+        &::placeholder {
+            color: var(--bulma-text-light);
+        }
+    }
+
+    .comments-toolbar__button--reload {
+        color: var(--bulma-text-strong);
+
+        &:hover,
+        &:focus {
+            background-color: var(--enso-filter-surface);
+            color: var(--bulma-text-strong);
+        }
+    }
+}
+
+.comments-wrapper {
+    .comments-toolbar {
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .control {
+            margin-bottom: 0;
+        }
+
+        .comments-toolbar__button--reload {
+            background-color: var(--enso-filter-control-surface);
+            border-color: var(--enso-surface-border);
+            color: var(--bulma-text-strong);
+
+            &:hover,
+            &:focus {
+                background-color: var(--enso-filter-surface);
+                border-color: var(--enso-surface-border);
+                color: var(--bulma-text-strong);
+            }
+        }
+
+        .comments-toolbar__search {
+            color: var(--bulma-text-strong);
+        }
+
+        .comments-toolbar__clear {
+            .delete {
+                background-color: var(--bulma-scheme-main-ter);
+
+                &::before,
+                &::after {
+                    background-color: var(--bulma-text);
+                }
+            }
+        }
+    }
+
+    .comments {
         max-height: 500px;
         overflow-y: auto;
 
@@ -237,4 +302,5 @@ export default {
             margin-bottom: 0.5rem;
         }
     }
+}
 </style>

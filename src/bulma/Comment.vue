@@ -1,5 +1,5 @@
 <template>
-    <div class="box has-background-light p-2 raises-on-hover">
+    <div class="box comment-card p-3">
         <article class="media"
             @mouseover="controls = true"
             @mouseleave="controls = !confirmation ? false : controls">
@@ -13,15 +13,15 @@
             <div class="media-content">
                 <div class="mb-2"
                     v-if="!isNew">
-                    <a>
+                    <a class="comment-card-owner">
                         <strong>{{ comment.owner.person.name }}</strong>
                     </a>
-                    <span class="has-text-muted ml-1"
+                    <span class="comment-card__meta has-text-muted ml-1"
                         v-tooltip="dateFormat(commentedAt)"
                         v-if="humanReadableDates">
                         {{ timeFromNow(commentedAt) }} {{ i18n('ago') }}
                     </span>
-                    <span class="has-text-muted ml-1"
+                    <span class="comment-card__meta has-text-muted ml-1"
                         v-tooltip="`${timeFromNow(commentedAt)} ${i18n('ago')}`"
                         v-else>
                         {{ dateFormat(commentedAt) }}
@@ -31,11 +31,11 @@
                     </span>
                     <div class="is-pulled-right is-flex"
                         v-if="!isNew && !isEditing && controls">
-                        <a class="button is-naked is-small mr-1"
+                        <a class="button is-naked is-small mr-1 has-text-muted"
                             @click="originalBody = comment.body;"
                             v-if="comment.isEditable">
                             <span class="icon is-small">
-                                <fa icon="pencil-alt"/>
+                                <fa :icon="faPen"/>
                             </span>
                         </a>
                         <confirmation placement="bottom-end"
@@ -43,10 +43,10 @@
                             @show="confirmation = true"
                             @hide="confirmation = controls = false"
                             v-if="comment.isDeletable">
-                            <a class="button is-naked is-small"
+                            <a class="button is-naked is-small has-text-muted"
                                 @click="confirmation = true">
                                 <span class="icon is-small">
-                                    <fa icon="trash-alt"/>
+                                    <fa :icon="faTrashCan"/>
                                 </span>
                             </a>
                         </confirmation>
@@ -59,20 +59,20 @@
                     <inputor v-bind="$attrs"
                          :comment="comment"/>
                     <div class="mt-2 has-text-right">
-                        <a class="button is-rounded is-bold mr-1 is-small action"
+                        <a class="button is-rounded mr-1 is-small action comment-card__cancel has-text-weight-bold"
                             @click="isNew ? $emit('cancel-add') : cancelAdd()">
                             <span>
                                 {{ i18n('Cancel') }}
                             </span>
                             <span class="icon is-small">
-                                <fa icon="ban"/>
+                                <fa :icon="faBan"/>
                             </span>
                         </a>
                         <a v-tooltip.right="{
                                 content: i18n('Shift + Enter to post'),
                                 delay: 800
                             }"
-                            class="button is-rounded is-bold is-success is-small action"
+                            class="button is-rounded is-success is-small action has-text-weight-bold"
                             @click="isNew ? $emit('save') : update()">
                             <span v-if="isNew">
                                 {{ i18n('Post') }}
@@ -81,7 +81,7 @@
                                 {{ i18n('Update') }}
                             </span>
                             <span class="icon is-small">
-                                <fa icon="check"/>
+                                <fa :icon="faCheck"/>
                             </span>
                         </a>
                     </div>
@@ -92,18 +92,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-    faPencilAlt, faTrashAlt, faCheck, faBan,
+    faPen, faTrashCan, faCheck, faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import Confirmation from '@enso-ui/confirmation/bulma';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 import Inputor from './Inputor.vue';
-
-library.add(faPencilAlt, faTrashAlt, faCheck, faBan);
+import { useStore } from '../utils/pinia';
 
 export default {
     name: 'Comment',
@@ -137,10 +134,19 @@ export default {
         controls: false,
         confirmation: false,
         originalBody: null,
+        faPen,
+        faTrashCan,
+        faCheck,
+        faBan,
     }),
 
     computed: {
-        ...mapState(['meta', 'user']),
+        meta() {
+            return useStore('app').meta;
+        },
+        user() {
+            return useStore('app').user;
+        },
         highlightTaggedUsers() {
             let { body } = this.comment;
 
@@ -194,8 +200,27 @@ export default {
 </script>
 
 <style lang="scss">
+.comment-card {
+    .comment-card__cancel {
+        background-color: var(--enso-filter-control-surface);
+        color: var(--bulma-text-strong);
+
+        &:hover,
+        &:focus {
+            background-color: var(--enso-filter-surface);
+            color: var(--bulma-text-strong);
+        }
+    }
+}
+
+.comment-card {
+    .comment-card-owner {
+        color: var(--bulma-link);
+    }
+
     .media {
         border-radius: inherit;
+
         .comment-body {
             word-break: break-word;
         }
@@ -204,4 +229,9 @@ export default {
             overflow: unset;
         }
     }
+
+    .comment-card__meta {
+        color: var(--bulma-text-light);
+    }
+}
 </style>

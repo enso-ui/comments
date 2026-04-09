@@ -44,10 +44,10 @@
 
 <script>
 import { Fade } from '@enso-ui/transitions';
-import { mapState } from 'vuex';
 import debounce from 'lodash/debounce';
 import getCaretCoordinates from 'textarea-caret';
 import { focus, clickOutside } from '@enso-ui/directives';
+import { useStore } from '../utils/pinia';
 
 export default {
     name: 'Inputor',
@@ -74,7 +74,9 @@ export default {
     }),
 
     computed: {
-        ...mapState(['user']),
+        user() {
+            return useStore('app').user;
+        },
         hasText() {
             return this.comment.body.trim();
         },

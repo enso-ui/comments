@@ -1,7 +1,7 @@
 <template>
     <card collapsible
         :collapsed="collapsed">
-        <card-header class="has-background-light">
+        <card-header>
             <template #title>
                 <span class="icon is-small mr-1">
                     <fa :icon="icon"/>
@@ -14,7 +14,7 @@
                 <card-collapse/>
             </template>
         </card-header>
-        <card-content class="is-paddingless">
+        <card-content class="p-0">
             <comments :id="id"
                 ref="comments"
                 :type="type"
@@ -25,16 +25,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faComments, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 import {
     Card, CardHeader, CardRefresh, CardCollapse, CardBadge, CardContent,
 } from '@enso-ui/card/bulma';
 import Comments from './Comments.vue';
-
-library.add(faComments, faPlusSquare);
+import { useStore } from '../utils/pinia';
 
 export default {
     name: 'CommentsCard',
@@ -74,7 +71,9 @@ export default {
     }),
 
     computed: {
-        ...mapState('layout', ['isMobile']),
+        isMobile() {
+            return useStore('layout').isMobile;
+        },
         displayTitle() {
             return !this.isMobile
                 ? this.title || this.i18n('Comments')
