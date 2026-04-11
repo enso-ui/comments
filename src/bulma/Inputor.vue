@@ -45,9 +45,12 @@
 <script>
 import { Fade } from '@enso-ui/transitions';
 import debounce from 'lodash/debounce';
-import getCaretCoordinates from 'textarea-caret';
+import * as getCaretCoordinatesModule from 'textarea-caret';
 import { focus, clickOutside } from '@enso-ui/directives';
 import { useStore } from '../utils/pinia';
+
+const getCaretCoordinates = getCaretCoordinatesModule.default
+    ?? getCaretCoordinatesModule;
 
 export default {
     name: 'Inputor',
