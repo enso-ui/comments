@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/comments",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Comments",
   "main": "bulma/index.js",
   "repository": {
