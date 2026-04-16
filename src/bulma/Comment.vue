@@ -13,7 +13,7 @@
             <div class="media-content">
                 <div class="mb-2"
                     v-if="!isNew">
-                    <a class="comment-card-owner">
+                    <a class="has-text-dark">
                         <strong>{{ comment.owner.person.name }}</strong>
                     </a>
                     <span class="comment-card__meta has-text-muted ml-1"
@@ -59,7 +59,7 @@
                     <inputor v-bind="$attrs"
                          :comment="comment"/>
                     <div class="mt-2 has-text-right">
-                        <a class="button is-rounded mr-1 is-small action comment-card__cancel has-text-weight-bold"
+                        <a class="button mr-1 is-small"
                             @click="isNew ? $emit('cancel-add') : cancelAdd()">
                             <span>
                                 {{ i18n('Cancel') }}
@@ -68,11 +68,7 @@
                                 <fa :icon="faBan"/>
                             </span>
                         </a>
-                        <a v-tooltip.right="{
-                                content: i18n('Shift + Enter to post'),
-                                delay: 800
-                            }"
-                            class="button is-rounded is-success is-small action has-text-weight-bold"
+                        <a class="button is-small is-dark"
                             @click="isNew ? $emit('save') : update()">
                             <span v-if="isNew">
                                 {{ i18n('Post') }}
@@ -201,23 +197,6 @@ export default {
 
 <style lang="scss">
 .comment-card {
-    .comment-card__cancel {
-        background-color: var(--enso-filter-control-surface);
-        color: var(--bulma-text-strong);
-
-        &:hover,
-        &:focus {
-            background-color: var(--enso-filter-surface);
-            color: var(--bulma-text-strong);
-        }
-    }
-}
-
-.comment-card {
-    .comment-card-owner {
-        color: var(--bulma-link);
-    }
-
     .media {
         border-radius: inherit;
 
