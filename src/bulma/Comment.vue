@@ -93,10 +93,10 @@ import {
     faPen, faTrashCan, faCheck, faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import Confirmation from '@enso-ui/confirmation/bulma';
+import { app as useApp } from '@enso-ui/ui/src/pinia/app';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 import Inputor from './Inputor.vue';
-import { useStore } from '../utils/pinia';
 
 export default {
     name: 'Comment',
@@ -138,10 +138,10 @@ export default {
 
     computed: {
         meta() {
-            return useStore('app').meta;
+            return useApp().meta;
         },
         user() {
-            return useStore('app').user;
+            return useApp().user;
         },
         highlightTaggedUsers() {
             let { body } = this.comment;

@@ -66,8 +66,8 @@
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { faPlus, faArrowsRotate, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { app as useApp } from '@enso-ui/ui/src/pinia/app';
 import Comment from './Comment.vue';
-import { useStore } from '../utils/pinia';
 
 export default {
     name: 'Comments',
@@ -111,7 +111,7 @@ export default {
 
     computed: {
         user() {
-            return useStore('app').user;
+            return useApp().user;
         },
         filteredComments() {
             const query = this.internalQuery.toLowerCase();

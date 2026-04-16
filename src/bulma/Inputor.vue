@@ -47,7 +47,7 @@ import { Fade } from '@enso-ui/transitions';
 import debounce from 'lodash/debounce';
 import * as getCaretCoordinatesModule from 'textarea-caret';
 import { focus, clickOutside } from '@enso-ui/directives';
-import { useStore } from '../utils/pinia';
+import { app as useApp } from '@enso-ui/ui/src/pinia/app';
 
 const getCaretCoordinates = getCaretCoordinatesModule.default
     ?? getCaretCoordinatesModule;
@@ -78,7 +78,7 @@ export default {
 
     computed: {
         user() {
-            return useStore('app').user;
+            return useApp().user;
         },
         hasText() {
             return this.comment.body.trim();
