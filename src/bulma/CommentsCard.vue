@@ -30,7 +30,7 @@ import { faComments } from '@fortawesome/free-solid-svg-icons';
 import {
     Card, CardHeader, CardRefresh, CardCollapse, CardBadge, CardContent,
 } from '@enso-ui/card/bulma';
-import { layout as useLayout } from '@enso-ui/ui/src/pinia/layout';
+import { layout } from '@enso-ui/ui/src/pinia/layout';
 import Comments from './Comments.vue';
 
 export default {
@@ -72,15 +72,12 @@ export default {
 
     computed: {
         isMobile() {
-            return useLayout().isMobile;
+            return layout().isMobile;
         },
         displayTitle() {
             return !this.isMobile
                 ? this.title || this.i18n('Comments')
                 : null;
-        },
-        isEmpty() {
-            return this.count === 0;
         },
     },
 

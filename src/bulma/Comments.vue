@@ -66,7 +66,7 @@
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { faPlus, faArrowsRotate, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { app as useApp } from '@enso-ui/ui/src/pinia/app';
+import { app } from '@enso-ui/ui/src/pinia/app';
 import Comment from './Comment.vue';
 
 export default {
@@ -106,13 +106,9 @@ export default {
         loading: false,
         internalQuery: '',
         path: v.$route.path,
-        diffForHumansDate: null,
     }),
 
     computed: {
-        user() {
-            return useApp().user;
-        },
         filteredComments() {
             const query = this.internalQuery.toLowerCase();
 
@@ -161,7 +157,7 @@ export default {
             return {
                 body: '',
                 taggedUsers: [],
-                owner: this.user,
+                owner: app().user,
             };
         },
         create() {

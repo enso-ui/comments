@@ -93,7 +93,7 @@ import {
     faPen, faTrashCan, faCheck, faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import Confirmation from '@enso-ui/confirmation/bulma';
-import { app as useApp } from '@enso-ui/ui/src/pinia/app';
+import { app } from '@enso-ui/ui/src/pinia/app';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 import Inputor from './Inputor.vue';
@@ -137,12 +137,6 @@ export default {
     }),
 
     computed: {
-        meta() {
-            return useApp().meta;
-        },
-        user() {
-            return useApp().user;
-        },
         highlightTaggedUsers() {
             let { body } = this.comment;
 
@@ -189,7 +183,7 @@ export default {
             return formatDistance(date);
         },
         dateFormat(date) {
-            return format(date, `${this.meta.dateFormat} H:i`);
+            return format(date, `${app().meta.dateFormat} H:i`);
         },
     },
 };
