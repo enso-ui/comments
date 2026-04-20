@@ -1,11 +1,11 @@
 {
   "name": "@enso-ui/comments",
   "version": "4.2.8",
-  "description": "Comments",
+  "description": "Comments cards and inline comment threads for Enso UI.",
   "main": "bulma/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/@enso-ui/comments.git"
+    "url": "git+https://github.com/enso-ui/comments.git"
   },
   "keywords": [
     "comments",
@@ -15,9 +15,9 @@
   "author": "Adrian Ocneanu <aocneanu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/@enso-ui/comments/issues"
+    "url": "https://github.com/enso-ui/comments/issues"
   },
-  "homepage": "https://github.com/@enso-ui/comments#readme",
+  "homepage": "https://github.com/enso-ui/comments#readme",
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run"
