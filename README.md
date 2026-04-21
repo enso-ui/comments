@@ -81,6 +81,12 @@ Props:
 Events:
 - No direct emits.
 
+## Companion Backend Package
+
+- [`laravel-enso/comments`](https://docs.laravel-enso.com/backend/comments.html) [↗](https://github.com/laravel-enso/comments)
+
+The frontend widgets depend on the backend companion for comment thread endpoints, tagged-user support, and the model-type contracts used by the card.
+
 ## Depends On
 
 - [`@enso-ui/card`](https://docs.laravel-enso.com/frontend/card.html) [↗](https://github.com/enso-ui/card)
