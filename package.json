@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/comments",
-  "version": "4.2.8",
+  "version": "4.2.9",
   "description": "Comments cards and inline comment threads for Enso UI.",
   "main": "bulma/index.js",
   "repository": {

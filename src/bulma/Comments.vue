@@ -25,7 +25,7 @@
                         <fa :icon="faSearch"/>
                     </span>
                     <span v-if="internalQuery"
-                        class="icon is-small is-right clear-button has-text-muted is-clickable"
+                        class="icon is-small is-right clear-button is-clickable"
                         @click="internalQuery = ''">
                         <a class="delete is-small"/>
                     </span>

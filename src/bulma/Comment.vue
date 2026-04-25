@@ -16,12 +16,12 @@
                     <a class="has-text-dark">
                         <strong>{{ comment.owner.person.name }}</strong>
                     </a>
-                    <span class="comment-card__meta has-text-muted ml-1"
+                    <span class="has-text-light ml-1"
                         v-tooltip="dateFormat(commentedAt)"
                         v-if="humanReadableDates">
                         {{ timeFromNow(commentedAt) }} {{ i18n('ago') }}
                     </span>
-                    <span class="comment-card__meta has-text-muted ml-1"
+                    <span class="has-text-light ml-1"
                         v-tooltip="`${timeFromNow(commentedAt)} ${i18n('ago')}`"
                         v-else>
                         {{ dateFormat(commentedAt) }}
@@ -31,7 +31,7 @@
                     </span>
                     <div class="is-pulled-right is-flex"
                         v-if="!isNew && !isEditing && controls">
-                        <a class="button is-naked is-small mr-1 has-text-muted"
+                        <a class="button is-naked is-small mr-1"
                             @click="originalBody = comment.body;"
                             v-if="comment.isEditable">
                             <span class="icon is-small">
@@ -43,7 +43,7 @@
                             @show="confirmation = true"
                             @hide="confirmation = controls = false"
                             v-if="comment.isDeletable">
-                            <a class="button is-naked is-small has-text-muted"
+                            <a class="button is-naked is-small"
                                 @click="confirmation = true">
                                 <span class="icon is-small">
                                     <fa :icon="faTrashCan"/>
@@ -201,10 +201,6 @@ export default {
         .media-content {
             overflow: unset;
         }
-    }
-
-    .comment-card__meta {
-        color: var(--bulma-text-light);
     }
 }
 </style>
