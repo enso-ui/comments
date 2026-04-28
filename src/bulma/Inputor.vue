@@ -44,7 +44,7 @@
 
 <script>
 import { Fade } from '@enso-ui/transitions';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import * as getCaretCoordinatesModule from 'textarea-caret';
 import { focus, clickOutside } from '@enso-ui/directives';
 import { app } from '@enso-ui/ui/src/pinia/app';
